@@ -45,8 +45,7 @@ public class UserMealsUtil {
                     Integer::sum)));
 
         result.addAll(mealList.stream().filter(userMeal -> byDay.get(userMeal.getDateTime().toLocalDate()) > caloriesPerDay
-                && userMeal.getDateTime().toLocalTime().isAfter(startTime)
-                && userMeal.getDateTime().toLocalTime().isBefore(endTime))
+                && TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime))
                 .map(userMeal -> new UserMealWithExceed(
                         userMeal.getDateTime(),
                         userMeal.getDescription(),
