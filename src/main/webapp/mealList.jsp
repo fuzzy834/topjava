@@ -18,9 +18,19 @@
             $('td').click(function(e)	{
                 var t = e.target || e.srcElement;
                 var element_name = t.tagName.toLowerCase();
+                var elem_id = t.getAttribute("id");
                 if(element_name == 'input')	{return false;}
+                var code = "";
+                alert(elem_id);
+                if(elem_id == "date_time"){
+                    code = '<input type="datetime-local" id="edit" value="'+val+'"/>';
+                }else if(elem_id == "description"){
+                    code = '<input type="text" id="edit" value="'+val+'"/>';
+                }else {
+                    code = '<input type="number" id="edit" value="'+val+'"/>';
+                }
                 var val = $(this).html();
-                var code = '<input type="text" id="edit" value="'+val+'"/>';
+
                 $(this).empty().append(code);
                 $('#edit').focus();
                 $('#edit').blur(function(){
@@ -50,9 +60,9 @@
             <c:forEach items="${mealWithExceedList}" var="meal">
                 <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
                 <tr>
-                    <td>${meal.dateTime}</td>
-                    <td>${meal.description}</td>
-                    <td>${meal.calories}</td>
+                    <td id="date_time">${meal.dateTime}</td>
+                    <td id="description">${meal.description}</td>
+                    <td id="calories">${meal.calories}</td>
                 </tr>
             </c:forEach>
         </tbody>
