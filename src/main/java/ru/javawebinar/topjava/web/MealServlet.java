@@ -25,23 +25,14 @@ public class MealServlet extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<MealWithExceed> mealWithExceedList = MealsUtil.getFilteredWithExceeded(
                 mealsDAO.getList(), LocalTime.MIN, LocalTime.MAX, 2000);
-        JSONArray jsonArray = new JSONArray();
-        for (MealWithExceed meal : mealWithExceedList){
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.append("id", meal.getId());
-            jsonObject.append("dateTime", meal.getDateTime());
-            jsonObject.append("description", meal.getDescription());
-            jsonObject.append("calories", meal.getCalories());
-            jsonObject.append("exceed", meal.isExceed());
-            jsonArray.put(jsonObject);
-        }
+
         req.setCharacterEncoding("UTF-8");
-        req.setAttribute("jsonArray", jsonArray);;
+        req.setAttribute("mealWithExceedList", mealWithExceedList);;
         req.getRequestDispatcher("/mealList.jsp").forward(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getParameter("fields"));
+        System.out.println(req.getParameter("data"));
     }
 }

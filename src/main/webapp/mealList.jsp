@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <script   src="http://code.jquery.com/jquery-3.1.0.js"
@@ -13,31 +14,23 @@
               integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="
               crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function () {
-                var array = ${jsonArray};
-                for (var i = 0; i<array.length; i++){
-                    var meal = array[i];
-                    $("#table_body").append(
-                            "<tr>"
-                                +"<td>" + meal['dateTime'] + "</td>"
-                                +"<td>" + meal['description'] + "</td>"
-                                +"<td>" + meal['calories'] + "</td>"
-                            +"</tr>"
-                    );
-                }
-        });
-        $(function()	{
+          $(function()	{
             $('td').click(function(e)	{
                 var t = e.target || e.srcElement;
-                var elm_name = t.tagName.toLowerCase();
-                if(elm_name == 'input')	{return false;}
+                var element_name = t.tagName.toLowerCase();
+                if(element_name == 'input')	{return false;}
                 var val = $(this).html();
-                var code = '<input formmethod="post" formaction="mealList.jsp" type="text" name="fields" id="edit" value="'+val+'" />';
+                var code = '<input type="text" id="edit" value="'+val+'"/>';
                 $(this).empty().append(code);
                 $('#edit').focus();
-                $('#edit').blur(function()	{
+                $('#edit').blur(function(){
                     var val = $(this).val();
                     $(this).parent().empty().html(val);
+                    alert(val);
+                    $.post('/topjava/meals',{data:val}).done(function (data) {
+                            alert(data);
+
+                    });
                 });
             });
         });
@@ -54,6 +47,14 @@
             </tr>
         </thead>
         <tbody id="table_body">
+            <c:forEach items="${mealWithExceedList}" var="meal">
+                <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
+                <tr>
+                    <td>${meal.dateTime}</td>
+                    <td>${meal.description}</td>
+                    <td>${meal.calories}</td>
+                </tr>
+            </c:forEach>
         </tbody>
     </table>
 </body>
