@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -33,6 +34,18 @@ public class MealServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getParameter("data"));
+        List<MealWithExceed> mealWithExceedList = MealsUtil.getFilteredWithExceeded(
+                mealsDAO.getList(), LocalTime.MIN, LocalTime.MAX, 2000);
+        JSONArray jsonMeals = new JSONArray();
+        for (MealWithExceed meal : mealWithExceedList){
+            JSONObject tempMeal = new JSONObject();
+            tempMeal.append("dateTime", meal.getDateTime().toString());
+            tempMeal.append("description", meal.getDescription());
+            tempMeal.append("calories", meal.getCalories());
+            jsonMeals.put(tempMeal);
+        }
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = resp.getWriter();
+        out.print(jsonMeals);
     }
 }

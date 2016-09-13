@@ -14,6 +14,13 @@
               integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="
               crossorigin="anonymous"></script>
     <script>
+
+          $(document).ready(function () {
+              $.post('/topjava/meals',{data : "receive_data"}, function (msg) {
+                  alert(msg);
+              });
+          });
+
           $(function()	{
             $('td').click(function(e)	{
                 var t = e.target || e.srcElement;
