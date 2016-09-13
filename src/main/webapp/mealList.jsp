@@ -14,6 +14,7 @@
               integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="
               crossorigin="anonymous"></script>
     <script>
+          var exceed = "";
 
           $(document).ready(updateList());
 
@@ -28,23 +29,30 @@
                   var array = JSON.parse(msg);
                   for (var i = 0; i < msg.length; i++){
                       var meal = array[i];
+                      var elem_id = meal['elem_id'];
                       $("#table_body").append(
-                              "<tr class='generated'>"
-                              +"<td onclick='eventHandler(this)' class='date_time'>" + meal['dateTime'] + "</td>"
-                              +"<td onclick='eventHandler(this)' class='description'>" + meal['description'] + "</td>"
-                              +"<td onclick='eventHandler(this)' class='calories'>" + meal['calories'] + "</td>"
+                              "<tr id='"+elem_id+"' class='generated'>"
+                              +"<td ondblclick='eventHandler(this)' class='date_time'>" + meal['dateTime'] + "</td>"
+                              +"<td ondblclick='eventHandler(this)' class='description'>" + meal['description'] + "</td>"
+                              +"<td ondblclick='eventHandler(this)' class='calories'>" + meal['calories'] + "</td>"
                               +"</tr>"
                       );
+                      if (meal["exceeded"] == "true") {
+                          $("#"+elem_id).css("background-color", "red");
+                      } else{
+                          $("#"+elem_id).css("background-color", "green");
+                      }
                   }
               });
           }
 
           function eventHandler (clickTarget) {
-                  var element_name = clickTarget.tagName.toLowerCase();
                   var elem_class = clickTarget.getAttribute("class");
-                  if (element_name == 'input') {
+                  if ($.contains(document.getElementById("table_body"), document.getElementById("edit"))) {
                       return false;
                   }
+                  var tr_id = $(clickTarget).parent().attr("id");
+                  var val = $(clickTarget).text();
                   var code = "";
                   if (elem_class == "date_time") {
                       code = '<input type="datetime-local" id="edit" value="' + val + '"/>';
@@ -53,26 +61,24 @@
                   } else {
                       code = '<input type="number" id="edit" value="' + val + '"/>';
                   }
-                  var val = $(clickTarget).html();
 
                   $(clickTarget).empty().append(code);
                   $('#edit').focus();
                   $('#edit').blur(function () {
-                      var val = $(clickTarget).val();
-                      $(clickTarget).parent().empty().html(val);
-                      $.post('/topjava/meals', {value: val, element_class: elem_class}).done(function (element_class) {
+                      val = $("#edit").val();
+                      $("#edit").parent().empty().html(val);
+                      $.post('/topjava/meals/edit', {value: val, element_class: elem_class, element_id: tr_id}).done(function () {
                           $(".generated").remove();
                           updateList();
                       });
                   });
               }
-
     </script>
 
     <title>Meal List</title>
 </head>
 <body>
-    <table>
+    <table border="1">
         <thead>
             <tr>
                 <th>Date and time</th>
