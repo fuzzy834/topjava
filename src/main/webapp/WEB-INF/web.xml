@@ -11,6 +11,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>addServlet</servlet-name>
+        <servlet-class>ru.javawebinar.topjava.web.AddServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>mealServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.MealServlet</servlet-class>
     </servlet>
@@ -44,5 +49,11 @@
         <servlet-name>deleteServlet</servlet-name>
         <url-pattern>/meals/delete</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>addServlet</servlet-name>
+        <url-pattern>/meals/add</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

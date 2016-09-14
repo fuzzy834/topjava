@@ -22,6 +22,27 @@
               }
           });
 
+          $(function() {
+              $('form').submit(function(e) {
+                  var form = $(this);
+                  $.ajax({
+                      type: form.attr('method'),
+                      url: form.attr('action'),
+                      data: {
+                          date: $("#add_date_time").val(),
+                          desc: $("#add_description").val(),
+                          cal: $("#add_calories").val()
+                      }
+                  }).done(function() {
+                      $(".generated").remove();
+                      updateList();
+                      document.getElementById("submit_input").form.reset();
+                  });
+                  e.preventDefault();
+              });
+          });
+
+
           function updateList () {
               $.post('/topjava/meals',{data : "receive_data"}, function (msg) {
                   var array = JSON.parse(msg);
@@ -95,5 +116,12 @@
         <tbody id="table_body">
         </tbody>
     </table>
+    <h3>Add Meal</h3>
+    <form id="add_form" method="post" action="/topjava/meals/add">
+        <input id="add_date_time" type="datetime-local" name="dateTime"/></br>
+        <input id="add_description" type="text" name="description"/></br>
+        <input id="add_calories" type="number" name="calories"/></br>
+        <input id="submit_input" type="submit" value="Add"/>
+    </form>
 </body>
 </html>

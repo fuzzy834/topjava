@@ -25,11 +25,8 @@ public class EditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String value = req.getParameter("value");
-        System.out.println(value);
         String elementClass = req.getParameter("element_class");
-        System.out.println(elementClass);
         int id = Integer.parseInt(req.getParameter("element_id"));
-        System.out.println(id);
 
         Meal meal = mealsDAO.get(id);
         if (elementClass.equals("date_time"))
@@ -37,7 +34,6 @@ public class EditServlet extends HttpServlet {
         else if(elementClass.equals("description"))
             meal.setDescription(value);
         else {
-            System.out.println("I'm here");
             meal.setCalories(Integer.parseInt(value));
         }
         mealsDAO.save(meal);

@@ -40,9 +40,7 @@ public class MealsDAOImpl implements MealsDAO{
         if (meal.isNew()){
             meal.setId(id.incrementAndGet());
         }
-        System.out.println("I'm here");
         repository.put(meal.getId(), meal);
-        repository.values().forEach(System.out::println);
     }
 
     @Override

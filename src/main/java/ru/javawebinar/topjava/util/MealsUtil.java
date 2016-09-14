@@ -70,7 +70,7 @@ public class MealsUtil {
                 mealsDAO.getList(), LocalTime.MIN, LocalTime.MAX, 2000)){
             JSONObject tempMeal = new JSONObject();
             tempMeal.append("elem_id", meal.getId());
-            tempMeal.append("dateTime", meal.getDateTime().toString());
+            tempMeal.append("dateTime", TimeUtil.toString(meal.getDateTime()));
             tempMeal.append("description", meal.getDescription());
             tempMeal.append("calories", meal.getCalories());
             tempMeal.append("exceeded", meal.isExceed());
