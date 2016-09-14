@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.web;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
 import ru.javawebinar.topjava.DAO.MealsDAO;
 import ru.javawebinar.topjava.DAO.MealsDAOImpl;
 import ru.javawebinar.topjava.model.Meal;
@@ -18,10 +19,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 /**
  * Created by Vitalii on 9/11/2016.
  */
 public class MealServlet extends HttpServlet{
+    private static final Logger LOG = getLogger(UserServlet.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
            req.getRequestDispatcher("/mealList.jsp").forward(req,resp);
@@ -29,6 +33,7 @@ public class MealServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LOG.debug("creating meal list");
         resp.setCharacterEncoding("UTF-8");
         PrintWriter out = resp.getWriter();
         out.print(MealsUtil.parseMealListToJSON());
