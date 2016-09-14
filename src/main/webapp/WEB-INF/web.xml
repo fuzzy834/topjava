@@ -20,6 +20,10 @@
         <servlet-class>ru.javawebinar.topjava.web.EditServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>deleteServlet</servlet-name>
+        <servlet-class>ru.javawebinar.topjava.web.DeleteServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>
@@ -36,5 +40,9 @@
         <url-pattern>/meals/edit</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>deleteServlet</servlet-name>
+        <url-pattern>/meals/delete</url-pattern>
+    </servlet-mapping>
 
 </web-app>

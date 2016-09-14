@@ -14,8 +14,6 @@
               integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="
               crossorigin="anonymous"></script>
     <script>
-          var exceed = "";
-
           $(document).ready(updateList());
 
           $(window).keydown(function(event){
@@ -35,6 +33,7 @@
                               +"<td ondblclick='eventHandler(this)' class='date_time'>" + meal['dateTime'] + "</td>"
                               +"<td ondblclick='eventHandler(this)' class='description'>" + meal['description'] + "</td>"
                               +"<td ondblclick='eventHandler(this)' class='calories'>" + meal['calories'] + "</td>"
+                              +"<td> <button onclick='deleteHandler($(this).parent())' type='button' class='delete' value='delete'>Delete</button></td>"
                               +"</tr>"
                       );
                       if (meal["exceeded"] == "true") {
@@ -45,7 +44,13 @@
                   }
               });
           }
-
+          function deleteHandler(clickTarget) {
+              var tr_id = $(clickTarget).parent().attr("id");
+              $.post('/topjava/meals/delete', {element_id: tr_id}).done(function () {
+                  $(".generated").remove();
+                  updateList();
+              });
+          }
           function eventHandler (clickTarget) {
                   var elem_class = clickTarget.getAttribute("class");
                   if ($.contains(document.getElementById("table_body"), document.getElementById("edit"))) {
@@ -84,6 +89,7 @@
                 <th>Date and time</th>
                 <th>Description</th>
                 <th>Calories</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody id="table_body">
