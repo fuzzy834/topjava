@@ -51,9 +51,9 @@
                       var elem_id = meal['elem_id'];
                       $("#table_body").append(
                               "<tr id='"+elem_id+"' class='generated'>"
-                              +"<td ondblclick='eventHandler(this)' class='date_time'>" + meal['dateTime'] + "</td>"
-                              +"<td ondblclick='eventHandler(this)' class='description'>" + meal['description'] + "</td>"
-                              +"<td ondblclick='eventHandler(this)' class='calories'>" + meal['calories'] + "</td>"
+                              +"<td onclick='eventHandler(this)' class='date_time'>" + meal['dateTime'] + "</td>"
+                              +"<td onclick='eventHandler(this)' class='description'>" + meal['description'] + "</td>"
+                              +"<td onclick='eventHandler(this)' class='calories'>" + meal['calories'] + "</td>"
                               +"<td> <button onclick='deleteHandler($(this).parent())' type='button' class='delete' value='delete'>Delete</button></td>"
                               +"</tr>"
                       );
