@@ -25,13 +25,19 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
         String user = req.getParameter("user");
-        if (user == null || user.equals("none"))
+        String logout = req.getParameter("action");
+        if ("logout".equals(logout)) {
             AuthorizedUser.setId(null);
-        else
+            req.getSession().invalidate();
+            req.setAttribute("authorized", false);
+        }
+        else {
             AuthorizedUser.setId(Integer.parseInt(user));
-
-        req.setAttribute("authorized", AuthorizedUser.isAuthorized());
+            req.getSession().setAttribute("authorized", true);
+            req.getSession().setAttribute("user", user);
+        }
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 }

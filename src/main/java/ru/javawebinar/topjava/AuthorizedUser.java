@@ -18,10 +18,6 @@ public class AuthorizedUser {
         id = newId;
     }
 
-    public static boolean isAuthorized(){
-        return id != null;
-    }
-
     public static int getCaloriesPerDay() {
         return MealsUtil.DEFAULT_CALORIES_PER_DAY;
     }
