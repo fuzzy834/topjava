@@ -29,7 +29,7 @@ public class UserServlet extends HttpServlet {
         if (user == null || user.equals("none"))
             AuthorizedUser.setId(null);
         else
-            AuthorizedUser.setId(user.equals("admin") ? 1 : 2);
+            AuthorizedUser.setId(Integer.parseInt(user));
 
         req.setAttribute("authorized", AuthorizedUser.isAuthorized());
         req.getRequestDispatcher("/index.jsp").forward(req, resp);

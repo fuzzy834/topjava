@@ -21,8 +21,11 @@
     Select user:
     <select name="user">
         <option value="none"></option>
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
+        <option value="1">Admin</option>
+        <option value="2">User1</option>
+        <option value="3">User2</option>
+        <option value="4">User3</option>
+        <option value="5">User4</option>
     </select>
     <button type="submit">Log in</button>
 </form></br>
