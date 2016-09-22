@@ -40,7 +40,9 @@ public class MealServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
+        if (request.getSession().getAttribute("user")==null){
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
         String action = request.getParameter("action");
         if ("filter".equals(action)) {
             LOG.info("Filtering meals");
@@ -76,7 +78,9 @@ public class MealServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-
+        if (request.getSession().getAttribute("user")==null){
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
         if (action == null) {
             LOG.info("getAll");
             request.setAttribute("mealList",

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import ru.javawebinar.topjava.AuthorizedUser;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,8 +33,7 @@ public class UserServlet extends HttpServlet {
             AuthorizedUser.setId(null);
             req.getSession().invalidate();
             req.setAttribute("authorized", false);
-        }
-        else {
+        } else {
             AuthorizedUser.setId(Integer.parseInt(user));
             req.getSession().setAttribute("authorized", true);
             req.getSession().setAttribute("user", user);
