@@ -1,10 +1,10 @@
 package ru.javawebinar.topjava.web;
 
+import com.sun.deploy.net.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.to.MealWithExceed;
 import ru.javawebinar.topjava.util.TimeUtil;
@@ -40,9 +40,6 @@ public class MealServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        if (request.getSession().getAttribute("user")==null){
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        }
         String action = request.getParameter("action");
         if ("filter".equals(action)) {
             LOG.info("Filtering meals");
@@ -59,7 +56,7 @@ public class MealServlet extends HttpServlet {
             LocalTime eTime = endTime.isEmpty() ? LocalTime.MAX : LocalTime.parse(endTime);
 
             List<MealWithExceed> mealList = TimeUtil
-                    .filterByDateTime(mealController.unfilteredWithExceed(), sDate, eDate, sTime, eTime);
+                    .filterByDateTime(mealController.unfilteredWithExceed(checkSession(request, response)), sDate, eDate, sTime, eTime);
             request.setAttribute("mealList", mealList);
             request.getRequestDispatcher("/mealList.jsp").forward(request, response);
         }
@@ -68,35 +65,37 @@ public class MealServlet extends HttpServlet {
             Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
                     LocalDateTime.parse(request.getParameter("dateTime")),
                     request.getParameter("description"),
-                    Integer.valueOf(request.getParameter("calories")), AuthorizedUser.id());
+                    Integer.valueOf(request.getParameter("calories")),
+                    checkSession(request, response));
 
             LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-            mealController.save(meal);
+            mealController.save(meal, checkSession(request, response));
             response.sendRedirect("meals");
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (request.getSession().getAttribute("user")==null){
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        }
+//        if (request.getSession().getAttribute("user")==null){
+//            request.getRequestDispatcher("/index.jsp").forward(request, response);
+//        }
         if (action == null) {
             LOG.info("getAll");
             request.setAttribute("mealList",
-                    mealController.unfilteredWithExceed());
+                    mealController.unfilteredWithExceed(checkSession(request, response)));
             request.getRequestDispatcher("/mealList.jsp").forward(request, response);
 
         } else if ("delete".equals(action)) {
             int id = getId(request);
             LOG.info("Delete {}", id);
-            mealController.delete(id);
+            mealController.delete(id, checkSession(request, response));
             response.sendRedirect("meals");
 
         } else if ("create".equals(action) || "update".equals(action)) {
             final Meal meal = action.equals("create") ?
-                    new Meal(LocalDateTime.now().withNano(0).withSecond(0), "", 1000, AuthorizedUser.id()) :
-                    mealController.get(getId(request));
+                    new Meal(LocalDateTime.now().withNano(0).withSecond(0), "", 1000,
+                            checkSession(request, response)) :
+                    mealController.get(getId(request), checkSession(request, response));
             request.setAttribute("meal", meal);
             request.getRequestDispatcher("/mealEdit.jsp").forward(request, response);
         }
@@ -105,5 +104,16 @@ public class MealServlet extends HttpServlet {
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.valueOf(paramId);
+    }
+
+    private int checkSession(HttpServletRequest request, HttpServletResponse response){
+        if (request.getSession().getAttribute("user")==null){
+            try {
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return Integer.parseInt((String) request.getSession().getAttribute("user"));
     }
 }

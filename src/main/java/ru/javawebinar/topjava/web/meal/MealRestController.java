@@ -25,41 +25,37 @@ public class MealRestController {
 
     @Autowired
     private MealService service;
-    public Meal save(Meal meal){
+    public Meal save(Meal meal, int userId){
         LOG.info("save meal " + meal);
-        int userId = AuthorizedUser.id();
         if (meal.getUserId() == null || meal.getUserId() != userId)
             meal.setUserId(userId);
         return service.save(userId, meal);
     }
 
-    public void delete(int id){
+    public void delete(int id, int userId){
         LOG.info("delete meal " + id);
-        int userId = AuthorizedUser.id();
         service.delete(userId, id);
     }
 
-    public Meal get(int id){
+    public Meal get(int id, int userId){
         LOG.info("get meal " + id);
-        int userId = AuthorizedUser.id();
         Meal meal = service.get(userId, id);
         return meal;
     }
 
-    public List<Meal> getAll(){
+    public List<Meal> getAll(int userId){
         LOG.info("getAll");
-        int userId = AuthorizedUser.id();
         List<Meal> userMeals =  service.getAll(userId);
         return userMeals.isEmpty() ? Collections.emptyList() : userMeals;
     }
 
-    public void update(Meal meal) {
+    public void update(Meal meal, int userId) {
         LOG.info("update meal " + meal);
-        save(meal);
+        save(meal, userId);
     }
 
-    public List<MealWithExceed> unfilteredWithExceed(){
-        return AuthorizedUser.id() == null ? Collections.emptyList()
-                : MealsUtil.getWithExceeded(getAll(), AuthorizedUser.getCaloriesPerDay());
+    public List<MealWithExceed> unfilteredWithExceed(Integer userId){
+        return userId == null ? Collections.emptyList()
+                : MealsUtil.getWithExceeded(getAll(userId), AuthorizedUser.getCaloriesPerDay());
     }
 }
