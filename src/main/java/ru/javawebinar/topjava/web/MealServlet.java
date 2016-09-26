@@ -109,6 +109,7 @@ public class MealServlet extends HttpServlet {
         if (request.getSession().getAttribute("user")==null){
             try {
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
+                return -1;
             } catch (ServletException | IOException e) {
                 e.printStackTrace();
             }
