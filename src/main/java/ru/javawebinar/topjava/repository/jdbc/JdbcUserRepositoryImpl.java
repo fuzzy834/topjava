@@ -18,7 +18,6 @@ import java.util.List;
  * User: gkislin
  * Date: 26.08.2014
  */
-
 @Repository
 public class JdbcUserRepositoryImpl implements UserRepository {
 
@@ -49,7 +48,6 @@ public class JdbcUserRepositoryImpl implements UserRepository {
                 .addValue("registered", user.getRegistered())
                 .addValue("enabled", user.isEnabled())
                 .addValue("caloriesPerDay", user.getCaloriesPerDay());
-
         if (user.isNew()) {
             Number newKey = insertUser.executeAndReturnKey(map);
             user.setId(newKey.intValue());

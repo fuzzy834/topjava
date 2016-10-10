@@ -42,4 +42,8 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     public List<User> getAll() {
         return crudRepository.findAll();
     }
+
+    public User getUserWithMeals(int id){
+        return crudRepository.getUserWithMeals(id);
+    }
 }
