@@ -38,7 +38,9 @@
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="formatters">
             <set>
-                <bean class="ru.javawebinar.topjava.util.TimeUtil" />
+                <bean class="ru.javawebinar.topjava.util.formatters.LocalDateTimeFormatter"/>
+                <bean class="ru.javawebinar.topjava.util.formatters.LocalDateFormatter"/>
+                <bean class="ru.javawebinar.topjava.util.formatters.LocalTimeFormatter" />
             </set>
         </property>
     </bean>

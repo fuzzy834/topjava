@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
@@ -9,27 +10,27 @@
 <section>
     <h2><a href="${pageContext.request.contextPath}/">Home</a></h2>
     <h3><fmt:message key="meals.title"/></h3>
-    <form method="post" action="meals?action=filter">
+    <form method="post" action="/topjava/meals">
         <dl>
             <dt>From Date:</dt>
-            <dd><input type="date" name="startDate" value="${startDate}"></dd>
+            <dd><input name="startDate" type="date"/></dd>
         </dl>
         <dl>
             <dt>To Date:</dt>
-            <dd><input type="date" name="endDate" value="${endDate}"></dd>
+            <dd><input name="endDate" type="date"/></dd>
         </dl>
         <dl>
             <dt>From Time:</dt>
-            <dd><input type="time" name="startTime" value="${startTime}"></dd>
+            <dd><input name="startTime" type="time"/></dd>
         </dl>
         <dl>
             <dt>To Time:</dt>
-            <dd><input type="time" name="endTime" value="${endTime}"></dd>
+            <dd><input name="endTime" type="time"/></dd>
         </dl>
-        <button type="submit">Filter</button>
+        <input type="submit" value="Filter"/>
     </form>
     <hr>
-    <a href="meals?action=create">Add Meal</a>
+    <a href="meals/create">Add Meal</a>
     <hr>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
