@@ -2,6 +2,9 @@ package ru.javawebinar.topjava.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import ru.javawebinar.topjava.util.TimeUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -60,6 +63,11 @@ public class Meal extends BaseEntity {
         this.description = description;
         this.calories = calories;
     }
+
+//    @ModelAttribute("meal")
+//    public Meal getMeal(LocalDateTime dateTime, String description, int calories){
+//        return new Meal(dateTime, description, calories);
+//    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
