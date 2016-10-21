@@ -28,7 +28,7 @@ public class InMemoryAdminRestControllerTest {
 
     @AfterClass
     public static void afterClass() {
-        appCtx.close();
+//        appCtx.close();
     }
 
     @Before

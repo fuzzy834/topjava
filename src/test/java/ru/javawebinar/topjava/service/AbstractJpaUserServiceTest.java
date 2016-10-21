@@ -7,8 +7,7 @@ import ru.javawebinar.topjava.repository.JpaUtil;
 /**
  * Created by Vitalii on 10/18/2016.
  */
-abstract public class AbstractJdbcAdapter extends AbstractUserServiceTest{
-
+abstract public class AbstractJpaUserServiceTest extends AbstractUserServiceTest {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private JpaUtil jpaUtil;
