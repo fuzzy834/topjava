@@ -10,7 +10,7 @@
 <section>
     <h2><a href="${pageContext.request.contextPath}/">Home</a></h2>
     <h3><fmt:message key="meals.title"/></h3>
-    <form method="post" action="/topjava/meals">
+    <form method="post" action="meals">
         <dl>
             <dt>From Date:</dt>
             <dd><input name="startDate" type="date"/></dd>

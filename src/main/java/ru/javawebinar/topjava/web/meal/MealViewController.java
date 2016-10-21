@@ -34,6 +34,16 @@ public class MealViewController extends AbstractMealController {
         return "meals";
     }
 
+    @PostMapping
+    public String filter(@RequestParam("startDate") LocalDate startDate,
+                         @RequestParam("endDate") LocalDate endDate,
+                         @RequestParam("startTime") LocalTime startTime,
+                         @RequestParam("endTime") LocalTime endTime, Model model){
+        List<MealWithExceed> mealList = super.getBetween(startDate, startTime, endDate, endTime);
+        model.addAttribute("meals", mealList);
+        return "meals";
+    }
+
     @GetMapping(value = "/delete")
     public String deleteMeal(@RequestParam("id") int id){
         super.delete(id);
@@ -73,15 +83,5 @@ public class MealViewController extends AbstractMealController {
                                @RequestParam("calories") int calories){
         super.create(new Meal(dateTime, description, calories));
         return "redirect:/meals";
-    }
-
-    @PostMapping
-    public String filter(@RequestParam("startDate") LocalDate startDate,
-                         @RequestParam("endDate") LocalDate endDate,
-                         @RequestParam("startTime") LocalTime startTime,
-                         @RequestParam("endTime") LocalTime endTime, Model model){
-        List<MealWithExceed> mealList = super.getBetween(startDate, startTime, endDate, endTime);
-        model.addAttribute("meals", mealList);
-        return "meals";
     }
 }

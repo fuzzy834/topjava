@@ -3,16 +3,15 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <html>
-<head>
-    <title>Meal</title>
-</head>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
-    <h2><a href="index.jsp">Home</a></h2>
+    <h2><a href="${pageContext.request.contextPath}">Home</a></h2>
     <h3>${null == param.id ? 'Create meal' : 'Edit meal'}</h3>
     <hr>
     <%--<jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>--%>
-    <form:form modelAttribute="meal" method="post" action="${null == param.id ? 'create' : 'update'}">
+    <form:form modelAttribute="meal" method="post" action="meals/${null == param.id ? 'create' : 'update'}">
         <input type="hidden" name="id" value="${id}">
         <dl>
             <dt><form:label path="dateTime">DateTime:</form:label></dt>
@@ -30,5 +29,6 @@
         <button onclick="window.history.back()">Cancel</button>
     </form:form>
 </section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
