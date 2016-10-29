@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web.user;
 
 import org.junit.Test;
+import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 
 import static org.hamcrest.Matchers.*;
@@ -9,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static ru.javawebinar.topjava.UserTestData.USER;
 import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
+import static ru.javawebinar.topjava.MealTestData.MEAL1_ID;
+import static ru.javawebinar.topjava.MealTestData.MEAL1;
 
 /**
  * GKislin
@@ -29,6 +32,24 @@ public class RootControllerTest extends AbstractControllerTest {
                                 hasProperty("id", is(START_SEQ)),
                                 hasProperty("name", is(USER.getName()))
                         )
+                )));
+    }
+
+    @Test
+    public void testMeals() throws Exception {
+        mockMvc.perform(get("/meals"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("meals"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"))
+                .andExpect(model().attribute("meals", hasSize(6)))
+                .andExpect(model().attribute("meals", hasItem(
+                   allOf(
+                           hasProperty("id", is(MEAL1_ID)),
+                           hasProperty("dateTime", is(MEAL1.getDateTime())),
+                           hasProperty("description", is(MEAL1.getDescription())),
+                           hasProperty("calories", is(MEAL1.getCalories()))
+                   )
                 )));
     }
 }

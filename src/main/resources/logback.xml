@@ -22,6 +22,9 @@
 
     <logger name="ru.javawebinar.topjava" level="debug"/>
 
+    <!--log spring-->
+    <logger name="org.springframework.web" level="debug"/>
+
     <!--log hibernate showSql-->
     <logger name="org.hibernate.SQL" level="debug"/>
 

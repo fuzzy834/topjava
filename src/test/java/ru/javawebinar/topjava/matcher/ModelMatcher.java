@@ -119,4 +119,12 @@ public class ModelMatcher<T> {
                     }
                 });
     }
+
+    public static <T> ModelMatcher<T> of(Class<T> entityClass) {
+        return new ModelMatcher<>(entityClass);
+    }
+
+    public static <T> ModelMatcher<T> of(Class<T> entityClass, Comparator<T> comparator) {
+        return new ModelMatcher<>(entityClass, comparator);
+    }
 }
