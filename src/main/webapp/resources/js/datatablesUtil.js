@@ -1,20 +1,23 @@
+var form;
+
 function makeEditable() {
-    $('.delete').click(function () {
-        deleteRow($(this).attr("id"));
-    });
-
-    $('#detailsForm').submit(function () {
-        save();
-        return false;
-    });
-
+    form = $('#detailsForm');
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(event, jqXHR, options, jsExc);
     });
 }
 
+function enable(id) {
+    $.ajax({
+        url: ajaxUrl + "enable",
+        type: 'POST',
+        data: {id:id},
+        success: updateTable
+    });
+}
+
 function add() {
-    $('#id').val(null);
+    form.find(":input").val("");
     $('#editRow').modal();
 }
 
@@ -22,25 +25,24 @@ function deleteRow(id) {
     $.ajax({
         url: ajaxUrl + id,
         type: 'DELETE',
-        success: function () {
+        success: function (data) {
             updateTable();
             successNoty('Deleted');
         }
     });
 }
 
+function updateTableWithData(data) {
+    datatableApi.clear();
+    datatableApi.rows.add(data);
+    datatableApi.draw();
+}
+
 function updateTable() {
-    $.get(ajaxUrl, function (data) {
-        datatableApi.fnClearTable();
-        $.each(data, function (key, item) {
-            datatableApi.fnAddData(item);
-        });
-        datatableApi.fnDraw();
-    });
+    $.get(ajaxUrl, updateTableWithData);
 }
 
 function save() {
-    var form = $('#detailsForm');
     $.ajax({
         type: "POST",
         url: ajaxUrl,
