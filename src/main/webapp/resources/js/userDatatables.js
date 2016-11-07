@@ -58,11 +58,7 @@ $(function () {
                 "render": renderDeleteBtn
             }
         ],
-        "order": [
-            [
-                0,
-                "asc"
-            ]
+        "order": [[0, "asc"]
         ],
         "createdRow": function (row, data, dataIndex) {
             if (!data.enabled) {
