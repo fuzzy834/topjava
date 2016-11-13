@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.util.exception;
 
 
+import org.springframework.http.ResponseEntity;
+
 /**
  * User: gkislin
  * Date: 14.05.2014
