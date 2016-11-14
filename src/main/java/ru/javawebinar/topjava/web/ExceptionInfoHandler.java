@@ -6,11 +6,16 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 /**
  * User: gkislin
@@ -42,6 +47,29 @@ public class ExceptionInfoHandler {
     @Order(Ordered.LOWEST_PRECEDENCE)
     public ErrorInfo handleError(HttpServletRequest req, Exception e) {
         return logAndGetErrorInfo(req, e, true);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public ErrorInfo bindingError(HttpServletRequest request, BindingResult result){
+        return logAndGetValidationError(request, result);
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public ErrorInfo restValidationError(HttpServletRequest request, MethodArgumentNotValidException e) {
+        return logAndGetValidationError(request, e.getBindingResult());
+    }
+
+    public ErrorInfo logAndGetValidationError(HttpServletRequest request, BindingResult result){
+        String[] errorInfo = result.getFieldErrors().stream()
+                .map(fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage()).toArray(String[]::new);
+        LOG.error("Validation error at: " + request.getRequestURL() + " - " + Arrays.toString(errorInfo));
+        return new ErrorInfo(request.getRequestURL(), "ValidationError", Arrays.toString(errorInfo));
     }
 
     public ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logException) {
