@@ -55,7 +55,7 @@
                     code="meals.add"/></a>
             <button style="margin-bottom: 1px" class="btn btn-sm" data-toggle="collapse"
                     data-target="#filter-section"><spring:message code="meals.filter"/></button>
-            <table class="table table-hover table-condensed" id="datatable">
+            <table style="width: 100%" class="table table-hover table-condensed" id="datatable">
                 <thead>
                 <tr>
                     <th><spring:message code="meals.dateTime"/></th>

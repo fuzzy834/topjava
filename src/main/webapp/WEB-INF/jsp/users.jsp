@@ -16,7 +16,7 @@
     <a class="btn btn-sm btn-info" onclick="add('<spring:message code="users.add"/>')"><spring:message
             code="users.add"/></a>
 
-    <table class="table table-hover table-condensed" id="datatable">
+    <table style="width: 100%" class="table table-hover table-condensed" id="datatable">
         <thead>
         <tr>
             <th><spring:message code="users.name"/></th>
