@@ -13,7 +13,7 @@
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
-<div class="well">
+<div class="jumbotron">
     <div class="container" id="meals-container">
         <div class="shadow">
             <h3><spring:message code="meals.title"/></h3>
