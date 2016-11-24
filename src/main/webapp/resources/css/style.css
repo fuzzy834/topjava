@@ -28,3 +28,78 @@
     background-color: #c6fbc2;
     border: 1px solid #9feba6;
 }
+
+.login-form{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.filter-field{
+    margin-right: 10px;
+}
+
+#filter-border{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 25px;
+    border-width: 3px;
+    padding-left: 40px;
+    padding-top: 20px;
+}
+
+#body-header-lang-collapse {
+    margin-top: 15px;
+    margin-right: 12px;
+}
+
+#body-header-lang {
+    margin-top: 14px;
+}
+
+#logout{
+    margin-top: 8px;
+    margin-right: 10px;
+}
+
+#lang-button{
+    text-decoration: none;
+}
+
+#lang-dropdown{
+    list-style-type: none;
+}
+
+#login-lang-collapse{
+    margin-top: 15px;
+    margin-right: 12px;
+}
+
+#login-lang{
+    margin-top: 15px;
+    margin-right: 12px;
+    margin-left: 0;
+}
+
+#collapse-button{
+    margin-right: 10px;
+}
+
+#login-button{
+    margin-left: 10px;
+}
+
+#filter-submit-button{
+    margin-right: 15px;
+}
+
+#datatable{
+    width: 100%;
+}
+
+#meals-container{
+    margin-top: 20px;
+}
+
+#users-container{
+    margin-top: 50px;
+}

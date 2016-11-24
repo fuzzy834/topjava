@@ -8,22 +8,39 @@
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <div class="navbar-header navbar-brand"><spring:message code="app.title"/></div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-header">
+
+            <div class="pull-right visible-xs" id="login-lang-collapse">
+                <jsp:include page="fragments/lang.jsp"/>
+            </div>
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navigation" aria-expanded="false" id="collapse-button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand visible-lg"><spring:message code="app.title"/></span>
+
+        </div>
+        <div class="navbar-collapse collapse" id="navigation">
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form:form class="navbar-form" role="form" action="spring_security_check"
                                method="post">
-                        <div class="form-group">
+                        <div class="form-group login-form">
                             <input type="text" placeholder="Email" class="form-control" name='username'>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group login-form">
                             <input type="password" placeholder="Password" class="form-control" name='password'>
                         </div>
-                        <button type="submit" class="btn btn-success"><spring:message code="app.login"/></button>
+                        <button type="submit" class="btn btn-success" id="login-button"><spring:message code="app.login"/></button>
                     </form:form>
                 </li>
-                <jsp:include page="fragments/lang.jsp"/>
+                <div class="pull-right visible-sm visible-md visible-lg" id="login-lang">
+                    <jsp:include page="fragments/lang.jsp"/>
+                </div>
             </ul>
         </div>
     </div>

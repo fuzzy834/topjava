@@ -10,6 +10,13 @@ function updateTable() {
     });
 }
 
+function clearFilter() {
+    var filterForm = $('#filter');
+    filterForm.find('input').val(null);
+    updateTable();
+    $('#filter-section').collapse('hide');
+}
+
 $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [

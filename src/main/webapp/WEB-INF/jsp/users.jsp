@@ -10,31 +10,28 @@
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
-<div class="jumbotron">
-    <div class="container">
-        <div class="shadow">
-            <h3><spring:message code="users.title"/></h3>
+<div class="container" id="users-container">
+    <h3><spring:message code="users.title"/></h3>
 
-            <div class="view-box">
-                <a class="btn btn-sm btn-info" onclick="add('<spring:message code="users.add"/>')"><spring:message code="users.add"/></a>
+    <a class="btn btn-sm btn-info" onclick="add('<spring:message code="users.add"/>')"><spring:message
+            code="users.add"/></a>
 
-                <table class="table table-striped display" id="datatable">
-                    <thead>
-                    <tr>
-                        <th><spring:message code="users.name"/></th>
-                        <th><spring:message code="users.email"/></th>
-                        <th><spring:message code="users.roles"/></th>
-                        <th><spring:message code="users.active"/></th>
-                        <th><spring:message code="users.registered"/></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
+    <table class="table table-hover table-condensed" id="datatable">
+        <thead>
+        <tr>
+            <th><spring:message code="users.name"/></th>
+            <th><spring:message code="users.email"/></th>
+            <th><spring:message code="users.roles"/></th>
+            <th><spring:message code="users.active"/></th>
+            <th><spring:message code="users.registered"/></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
 </div>
+
+
 <jsp:include page="fragments/footer.jsp"/>
 
 <div class="modal fade" id="editRow">
@@ -52,7 +49,8 @@
                         <label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="<spring:message code="users.name"/>">
                         </div>
                     </div>
 
@@ -60,21 +58,25 @@
                         <label for="email" class="control-label col-xs-3"><spring:message code="users.email"/></label>
 
                         <div class="col-xs-9">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="<spring:message code="users.email"/>">
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="<spring:message code="users.email"/>">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="password" class="control-label col-xs-3"><spring:message code="users.password"/></label>
+                        <label for="password" class="control-label col-xs-3"><spring:message
+                                code="users.password"/></label>
 
                         <div class="col-xs-9">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="<spring:message code="users.password"/>">
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="<spring:message code="users.password"/>">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button class="btn btn-primary" type="button" onclick="save()"><spring:message code="common.save"/></button>
+                            <button class="btn btn-primary" type="button" onclick="save()"><spring:message
+                                    code="common.save"/></button>
                         </div>
                     </div>
                 </form:form>
@@ -84,7 +86,7 @@
 </div>
 </body>
 <script type="text/javascript">
-    var edit_title ='<spring:message code="users.edit"/>';
+    var edit_title = '<spring:message code="users.edit"/>';
 </script>
 <script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>

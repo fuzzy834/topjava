@@ -13,6 +13,6 @@
     <base href="${pageContext.request.contextPath}/"/>
 
     <link rel="stylesheet" href="resources/css/style.css">
-    <link rel="stylesheet" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="shortcut icon" href="resources/images/icon-meal.png">
 </head>
